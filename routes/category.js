@@ -7,6 +7,7 @@ const {
   read,
   update,
   remove,
+  list,
 } = require("../controllers/category.js");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth.js");
 const { userById } = require("../controllers/user");
@@ -28,6 +29,7 @@ router.delete(
   isAdmin,
   remove
 );
+router.get("/categories", list);
 
 router.param("categoryId", categoryById);
 router.param("userId", userById);
