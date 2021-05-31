@@ -19,6 +19,30 @@ const Menu = ({ history }) => (
         </Link>
       </li>
 
+      {isAuthenticated() && isAuthenticated().user.role === 0 && (
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            style={isActive(history, "/user/dashboard")}
+            to="/user/dashboard"
+          >
+            Dashboard
+          </Link>
+        </li>
+      )}
+
+      {isAuthenticated() && isAuthenticated().user.role === 1 && (
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            style={isActive(history, "/admin/dashboard")}
+            to="/admin/dashboard"
+          >
+            Dashboard
+          </Link>
+        </li>
+      )}
+
       {!isAuthenticated() && (
         <>
           <li className="nav-item">
@@ -44,20 +68,22 @@ const Menu = ({ history }) => (
       )}
 
       {isAuthenticated() && (
-        <li className="nav-item">
-          <span
-            className="nav-link"
-            style={{ cursor: "pointer", color: "ffffff" }}
-            onClick={() =>
-              signOut(() => {
-                history.push("/");
-              })
-            }
-            to="/signout"
-          >
-            Sign Out
-          </span>
-        </li>
+        <>
+          <li className="nav-item">
+            <span
+              className="nav-link"
+              style={{ cursor: "pointer", color: "ffffff" }}
+              onClick={() =>
+                signOut(() => {
+                  history.push("/");
+                })
+              }
+              to="/signout"
+            >
+              Sign Out
+            </span>
+          </li>
+        </>
       )}
     </ul>
   </div>
