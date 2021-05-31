@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../core/Layout";
-import { API } from "../config";
+import { signUp } from "../auth/index";
 
 const SignUp = () => {
   const [values, setValues] = useState({
@@ -11,33 +12,29 @@ const SignUp = () => {
     success: false,
   });
 
-  const { name, email, password } = values;
+  const { name, email, password, error, success } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
-  const signUp = (user) => {
-    // console.log(name, email, password);
-    fetch(`${API}/signup`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const clickSubmit = (event) => {
     event.preventDefault();
-    signUp({ name, email, password });
+    setValues({ ...values, error: false });
+    signUp({ name, email, password }).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error, success: false });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          email: "",
+          password: "",
+          error: "",
+          success: true,
+        });
+      }
+    });
   };
 
   const signUpForm = () => (
@@ -48,6 +45,7 @@ const SignUp = () => {
           onChange={handleChange("name")}
           type="text"
           className="form-control"
+          value={name}
         />
       </div>
 
@@ -57,6 +55,7 @@ const SignUp = () => {
           onChange={handleChange("email")}
           type="email"
           className="form-control"
+          value={email}
         />
       </div>
 
@@ -66,6 +65,7 @@ const SignUp = () => {
           onChange={handleChange("password")}
           type="password"
           className="form-control"
+          value={password}
         />
       </div>
       <button onClick={clickSubmit} className="btn btn-primary">
@@ -74,14 +74,34 @@ const SignUp = () => {
     </form>
   );
 
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div
+      className="alert alert-info"
+      style={{ display: success ? "" : "none" }}
+    >
+      New Account is created. <Link to="/signin">Please sign in</Link>
+    </div>
+  );
+
   return (
     <Layout
       title="Sign-Up!"
       description="Here you can sign up! "
       className="container col-md-8 offset-md-2"
     >
+      {showSuccess()}
+      {showError()}
       {signUpForm()}
-      {JSON.stringify(values)}
+      {/* {JSON.stringify(values)} */}
     </Layout>
   );
 };
