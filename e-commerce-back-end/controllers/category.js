@@ -1,6 +1,5 @@
 const formidable = require("formidable");
 const _ = require("lodash");
-
 const Category = require("../models/category");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
@@ -18,7 +17,7 @@ exports.read = (req, res) => {
   return res.json(req.category);
 };
 
-exports.create = (req, res, next) => {
+exports.create = (req, res) => {
   const category = new Category(req.body);
   category.save((err, data) => {
     if (err) {

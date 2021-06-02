@@ -8,8 +8,8 @@ const {
   update,
   remove,
   list,
-} = require("../controllers/category.js");
-const { requireSignin, isAuth, isAdmin } = require("../controllers/auth.js");
+} = require("../controllers/category");
+const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
 router.get("/category/:categoryId", read);
