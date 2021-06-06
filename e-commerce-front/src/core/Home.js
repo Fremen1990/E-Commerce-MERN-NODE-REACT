@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts } from "./apiCore";
+import Card from "./Card";
 
 const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
@@ -38,11 +39,21 @@ const Home = () => {
     <Layout
       title="Home Page"
       description="MERN Node React Full Stack E-Commerce App"
+      className="container-fluid"
     >
-      ...
-      {JSON.stringify(productsByArrival)}
-      <hr />
-      {JSON.stringify(productsBySell)}
+      <h2 className="mb-4">New arrivals</h2>
+      <div className="row">
+        {productsByArrival.map((product, i) => (
+          <Card key={i} product={product} />
+        ))}
+      </div>
+
+      <h2 className="mb-4">Best Sellers</h2>
+      <div className="row">
+        {productsBySell.map((product, i) => (
+          <Card key={i} product={product} />
+        ))}
+      </div>
     </Layout>
   );
 };
