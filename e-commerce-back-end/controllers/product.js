@@ -162,19 +162,12 @@ exports.list = (req, res) => {
     .populate("category")
     .sort([[sortBy, order]])
     .limit(limit)
-    .exec((err, data) => {
+    .exec((err, products) => {
       if (err) {
-        return res.status(400).json({ message: "Product not found" });
+        return res.status(400).json({ error: "Products not found" });
       }
       res.json(products);
     });
-
-  Product.find().exec((err, data) => {
-    if (err) {
-      return res.status(400).json({ error: errorHandler(err) });
-    }
-    res.json(products);
-  });
 };
 
 // === it will find the products based on the req product category==== //
@@ -188,7 +181,7 @@ exports.listRelatedProducts = (req, res) => {
     .populate("category", "_id name")
     .exec((err, products) => {
       if (err) {
-        return res.status(400).json({ error: "Product not found" });
+        return res.status(400).json({ error: errorHandler(err) });
       }
       res.json(products);
     });
