@@ -3,6 +3,8 @@ import Layout from "./Layout";
 import Card from "./Card";
 import { getCategories } from "./apiCore";
 import Checkbox from "./Checkbox";
+import RadioBox from "./RadioBox";
+import { prices } from "./fixedPrices";
 
 const Shop = () => {
   const [myFilters, setMyFilters] = useState({
@@ -31,11 +33,30 @@ const Shop = () => {
 
   const handleFilters = (filters, filterBy) => {
     // console.log("SHOP", filters, filterBy);
-
     const newFilters = { ...myFilters };
     newFilters.filters[filterBy] = filters;
+
+    if(filterBy == "price"){
+      let priceValues = handlePrice(filters);
+      newFilters.filters[filterBy] = priceValues;
+}
     setMyFilters(newFilters);
   };
+
+
+  const handlePrice = value =>{
+  const data = prices;
+  let array =[];
+
+  for(let key in data){
+    if(data[key]._id === parseInt(value)  ){
+      array = data[key].array;
+    }
+    
+  }
+      return array;
+
+}
 
   return (
     <Layout
@@ -43,7 +64,7 @@ const Shop = () => {
       description="Search and find what you want to buy...."
       className="container-fluid"
     >
-      <divv className="row">
+      <div className="row">
         <div className="col-4">
           <h4>Filter by categories</h4>
           <ul>
@@ -51,10 +72,18 @@ const Shop = () => {
               categories={categories}
               handleFilters={(filters) => handleFilters(filters, "category")}
             />
-          </ul>
+         </ul>
+
+          <h4>Filter by price range</h4>
+          <div>
+                  <RadioBox 
+                  prices={prices} 
+                  handleFilters={filters => handleFilters(filters,"price")}/>
+          </div>
+
         </div>
         <div className="col-8">{JSON.stringify(myFilters)}</div>
-      </divv>
+      </div>
     </Layout>
   );
 };
