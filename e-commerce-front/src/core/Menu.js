@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signOut, isAuthenticated } from "../auth/index";
 import { itemTotal } from "./cartHelpers";
@@ -68,7 +68,7 @@ const Menu = ({ history }) => (
       )}
 
       {!isAuthenticated() && (
-        <>
+        <Fragment>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -88,11 +88,11 @@ const Menu = ({ history }) => (
               Sign Up
             </Link>
           </li>
-        </>
+        </Fragment>
       )}
 
       {isAuthenticated() && (
-        <>
+        <Fragment>
           <li className="nav-item">
             <span
               className="nav-link"
@@ -107,7 +107,7 @@ const Menu = ({ history }) => (
               Sign Out
             </span>
           </li>
-        </>
+        </Fragment>
       )}
     </ul>
   </div>
