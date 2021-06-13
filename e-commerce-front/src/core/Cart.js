@@ -56,7 +56,7 @@ const Cart = () => {
           <h2 className="mb-4">
             Your cart summary:
             <hr />
-            <Checkout products={items} />
+            <Checkout products={items} setRun={setRun} run={run} />
           </h2>
         </div>
       </div>
