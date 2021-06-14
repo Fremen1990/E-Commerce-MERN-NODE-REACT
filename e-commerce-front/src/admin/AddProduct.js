@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createProduct, getCategories } from "./apiAdmin";
+import BackToDashboard from "../core/BackToDashboard";
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -186,11 +187,12 @@ const AddProduct = () => {
       description={`Hello ${user.name} !!!  Ready to add new product? `}
     >
       <div className="row">
-        <div className="col-md-8 offset-md-2">
+        <div className="col-md-8 offset-md-2 ml-4 mr-4">
           {showLoading()}
           {showSuccess()}
           {showError()}
           {newPostForm()}
+          <BackToDashboard />
         </div>
       </div>
     </Layout>

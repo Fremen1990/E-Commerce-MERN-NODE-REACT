@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link, Redirect } from "react-router-dom";
 import { getProduct, getCategories, updateProduct } from "./apiAdmin";
+import BackToDashboard from "../core/BackToDashboard";
 
 const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({
@@ -225,7 +226,9 @@ const UpdateProduct = ({ match }) => {
       description={`G'day ${user.name}, ready to add a new product?`}
     >
       <div className="row">
-        <div className="col-md-8 offset-md-2">
+        <div className="col-md-8 offset-md-2 ml-4 mr-4">
+          <BackToDashboard />
+          <hr />
           {showLoading()}
           {showSuccess()}
           {showError()}

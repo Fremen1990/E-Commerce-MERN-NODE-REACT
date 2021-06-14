@@ -16,7 +16,7 @@ const Cart = () => {
   const showItems = (items) => {
     return (
       <div>
-        <h2>Your cart has {`${items.length}`}</h2>
+        <h2>Your cart has {`${items.length}`} items</h2>
         <hr />
         {items.map((product, i) => (
           <Card
@@ -48,11 +48,11 @@ const Cart = () => {
       className="container-fluid"
     >
       <div className="row">
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           {items.length > 0 ? showItems(items) : noItemsMessage()}
         </div>
 
-        <div className="col-6">
+        <div className="col-12 col-sm-6">
           <h2 className="mb-4">
             Your cart summary:
             <hr />

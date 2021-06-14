@@ -4,6 +4,7 @@ import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
 import moment from "moment";
+import BackToDashboard from "../core/BackToDashboard";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -39,10 +40,12 @@ const Orders = () => {
   const ShowOrdersLength = () => {
     if (orders.length > 0) {
       return (
-        <h1 className="text-danger display-2">Total orders: {orders.length}</h1>
+        <h4 className="text-danger display-2 display-4">
+          Total orders: {orders.length}
+        </h4>
       );
     } else {
-      return <h1 className="text-danger">No orders</h1>;
+      return <h4 className="text-danger display-4">No orders</h4>;
     }
   };
 
@@ -93,6 +96,7 @@ const Orders = () => {
         <div className="col-md-8 offset-md-2">
           {ShowOrdersLength()}
           {/* {JSON.stringify(orders)} */}
+          <BackToDashboard />
 
           {orders.map((o, oIndex) => {
             return (
@@ -102,7 +106,7 @@ const Orders = () => {
                 style={{ borderBottom: "5px solid indigo" }}
               >
                 <h2 className="mb-5">
-                  <span className="bg-primary">Order ID: {o._id}</span>
+                  <span className="bg-primary small">Order ID: {o._id}</span>
                 </h2>
 
                 <ul className="list-group mb-2">

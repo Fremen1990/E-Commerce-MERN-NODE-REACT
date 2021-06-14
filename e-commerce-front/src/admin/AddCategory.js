@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createCategory } from "./apiAdmin";
+import BackToDashboard from "../core/BackToDashboard";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
@@ -64,7 +65,9 @@ const AddCategory = () => {
   const goBack = () => (
     <div className="mt-5">
       <Link to="/admin/dashboard" className="text-warning">
-        Back to Dashboard
+        <a class="btn btn-warning" href="#" role="button">
+          Back to Dashboard{" "}
+        </a>
       </Link>
     </div>
   );
@@ -75,11 +78,12 @@ const AddCategory = () => {
       description={`Hello ${user.name} !!!`}
     >
       <div className="row">
-        <div className="col-md-8 offset-md-2">
+        <div className="col-md-8 offset-md-2 ml-4 mr-4">
           {showSuccess()}
           {showError()}
           {newCategoryForm()}
-          {goBack()}
+          {/* {goBack()} */}
+          <BackToDashboard />
         </div>
       </div>
     </Layout>

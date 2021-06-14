@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { getProducts, deleteProduct } from "./apiAdmin";
+import BackToDashboard from "../core/BackToDashboard";
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
@@ -42,7 +43,9 @@ const ManageProducts = () => {
       <div className="row">
         <div className="col-12">
           <h2 className="text-center">Total {products.length} products:</h2>
+          <BackToDashboard />
           <hr />
+
           <ul className="list-group">
             {products.map((p, i) => (
               <li

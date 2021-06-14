@@ -10,7 +10,7 @@ const Layout = ({
 }) => (
   <Fragment>
     <Menu />
-    <div className="jumbotron">
+    <div className="jumbotron h-25 h-sm-20">
       <h2>{title}</h2>
       <p className="lead">{description}</p>
     </div>
