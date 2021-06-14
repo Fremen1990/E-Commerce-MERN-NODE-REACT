@@ -102,43 +102,26 @@ exports.update = (req, res) => {
         error: "Image could not be uploaded",
       });
     }
-    // ============ check for all fields ==========
-    const { name, description, price, category, quantity, shipping } = fields;
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !quantity ||
-      !shipping
-    ) {
-      return res.status(400).json({
-        error: "All fields are required",
-      });
-    }
 
     let product = req.product;
     product = _.extend(product, fields);
 
-    // 1kb = 1.024 bajtes
-    //1mb = 1.048.576 bajtes
-
-    if (files.photo.size > 1048576) {
-      return res.status(400).json({
-        error: "Image size needs to be less than 1mb",
-      });
-    }
+    // 1kb = 1000
+    // 1mb = 1000000
 
     if (files.photo) {
-      console.log("FILES PHOTO", files.photo);
-
+      // console.log("FILES PHOTO: ", files.photo);
+      if (files.photo.size > 1000000) {
+        return res.status(400).json({
+          error: "Image should be less than 1mb in size",
+        });
+      }
       product.photo.data = fs.readFileSync(files.photo.path);
       product.photo.contentType = files.photo.type;
     }
 
     product.save((err, result) => {
       if (err) {
-        console.log("PRODUCT CREATE ERROR ", err);
         return res.status(400).json({
           error: errorHandler(err),
         });
@@ -146,6 +129,33 @@ exports.update = (req, res) => {
       res.json(result);
     });
   });
+};
+
+/**
+ * sell / arrival
+ * by sell = /products?sortBy=sold&order=desc&limit=4
+ * by arrival = /products?sortBy=createdAt&order=desc&limit=4
+ * if no params are sent, then all products are returned
+ */
+
+exports.list = (req, res) => {
+  let order = req.query.order ? req.query.order : "asc";
+  let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+  let limit = req.query.limit ? parseInt(req.query.limit) : 6;
+
+  Product.find()
+    .select("-photo")
+    .populate("category")
+    .sort([[sortBy, order]])
+    .limit(limit)
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Products not found",
+        });
+      }
+      res.json(products);
+    });
 };
 
 // ================ SELL // ARRICAL ==============
